@@ -3,11 +3,11 @@
 USE Szpital;
  
 SELECT 
-	nazwa nazwa_specjalizacji, COUNT(lekarz_id) ilosc_lekarzy 
+	nazwa nazwa_specjalizacji, COUNT(lekarz_id) AS ilosc_lekarzy 
 FROM 
-	specjalizacja sp 
+	specjalizacja AS sp 
 INNER JOIN 
-	przypisana_specjalizacja p_sp 
+	przypisana_specjalizacja AS p_sp 
 ON 
 	sp.id = p_sp.specjalizacja_id 
 GROUP BY 
