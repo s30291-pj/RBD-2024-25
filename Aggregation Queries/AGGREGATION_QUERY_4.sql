@@ -3,7 +3,7 @@
 USE Szpital;
 
 SELECT 
-	lk.imie AS imie_lekarza, lk.nazwisko AS nazwisko_lekarza, ROUND(AVG(wiek_pacjenta), 2) AS sredni_wiek_pacjentow
+	lk.imie AS imie_lekarza, lk.nazwisko AS nazwisko_lekarza, ROUND(AVG(wiek_pacjenta)) AS sredni_wiek_pacjentow
 FROM
 	lekarz AS lk
 INNER JOIN

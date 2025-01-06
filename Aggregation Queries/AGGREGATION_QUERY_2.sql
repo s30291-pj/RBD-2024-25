@@ -3,7 +3,7 @@
 USE Szpital;
 
 SELECT 
-	AVG(sp_ilosc) srednia_ilosc_specjalizacji_na_lekarza
+	ROUND(AVG(sp_ilosc), 2) AS srednia_ilosc_specjalizacji_na_lekarza
 FROM (
 	SELECT
 		lekarz_id, COUNT(lekarz_id) AS sp_ilosc

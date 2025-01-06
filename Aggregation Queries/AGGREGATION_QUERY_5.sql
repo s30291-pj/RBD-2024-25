@@ -1,9 +1,9 @@
-# Maksymalną, minimalną i średnią liczba leczeń przypisanych do diagnoz.
+# Maksymalna, minimalna i średnia liczba leczeń przypisanych do diagnoz.
 
 USE Szpital;
 
 SELECT 
-	MAX(ipl.ilosc_leczen) AS maksymalna_ilosc_leczen, MIN(ipl.ilosc_leczen) AS minimalna_ilosc_leczen, AVG(ipl.ilosc_leczen) AS srednia_ilosc_leczen
+	MAX(ipl.ilosc_leczen) AS maksymalna_ilosc_leczen, MIN(ipl.ilosc_leczen) AS minimalna_ilosc_leczen, ROUND(AVG(ipl.ilosc_leczen), 2) AS srednia_ilosc_leczen
 FROM 
 (
 	SELECT 
