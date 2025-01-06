@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS Szpital;
 USE Szpital;
 
 CREATE TABLE specjalizacja (
-  specjalizacja_id INT AUTO_INCREMENT PRIMARY KEY,
+  id INT AUTO_INCREMENT PRIMARY KEY,
   nazwa VARCHAR(255) NOT NULL
 );
 
@@ -28,11 +28,9 @@ CREATE TABLE pacjent (
   pesel VARCHAR(11) NOT NULL,
   imie VARCHAR(30) NOT NULL,
   nazwisko VARCHAR(30) NOT NULL,
-  telefon VARCHAR(15),
+  telefon INT,
   data_urodzenia DATE,
-  adres_id INT,
-  CONSTRAINT FK_pacjent_adres 
-    FOREIGN KEY (adres_id) REFERENCES adres(id)
+  adres_id INT
 );
 
 CREATE TABLE lekarz (
@@ -40,12 +38,10 @@ CREATE TABLE lekarz (
   pesel VARCHAR(11) NOT NULL,
   imie VARCHAR(30) NOT NULL,
   nazwisko VARCHAR(30) NOT NULL,
-  telefon VARCHAR(15),
+  telefon INT,
   stopien VARCHAR(255),
   stanowisko VARCHAR(255),
-  adres_id INT,
-  CONSTRAINT FK_lekarz_adres
-    FOREIGN KEY (adres_id) REFERENCES adres(id)
+  adres_id INT
 );
 
 CREATE TABLE oddzial (
@@ -58,14 +54,12 @@ CREATE TABLE gabinet (
   id INT AUTO_INCREMENT PRIMARY KEY,
   numer INT NOT NULL,
   pietro INT NOT NULL,
-  oddzial_id INT,
-  CONSTRAINT FK_gabinet_oddzial
-    FOREIGN KEY (oddzial_id) REFERENCES oddzial(id)
+  oddzial_id INT
 );
 
 CREATE TABLE diagnoza (
-  diagnoza_id INT AUTO_INCREMENT PRIMARY KEY,
-  opis VARCHAR(255)
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  opis TEXT
 );
 
 CREATE TABLE wizyta (
@@ -75,45 +69,25 @@ CREATE TABLE wizyta (
   pacjent_id INT NOT NULL,
   lekarz_id INT NOT NULL,
   gabinet_id INT,
-  diagnoza_id INT,
-  CONSTRAINT FK_wizyta_pacjent  
-    FOREIGN KEY (pacjent_id) REFERENCES pacjent(id),
-  CONSTRAINT FK_wizyta_lekarz   
-    FOREIGN KEY (lekarz_id) REFERENCES lekarz(id),
-  CONSTRAINT FK_wizyta_gabinet  
-    FOREIGN KEY (gabinet_id) REFERENCES gabinet(id),
-  CONSTRAINT FK_wizyta_diagnoza 
-    FOREIGN KEY (diagnoza_id) REFERENCES diagnoza(diagnoza_id)
+  diagnoza_id INT
 );
 
 CREATE TABLE przypisana_specjalizacja (
   id INT AUTO_INCREMENT PRIMARY KEY,
   lekarz_id INT NOT NULL,
-  specjalizacja_id INT NOT NULL,
-  CONSTRAINT FK_specjalizacja_lekarz
-    FOREIGN KEY (lekarz_id) REFERENCES lekarz(id),
-  CONSTRAINT FK_specjalizacja_specjalizacja
-    FOREIGN KEY (specjalizacja_id) REFERENCES specjalizacja(specjalizacja_id)
+  specjalizacja_id INT NOT NULL
 );
 
-CREATE TABLE przypisana_leczenie (
+CREATE TABLE przypisane_leczenie (
   id INT AUTO_INCREMENT PRIMARY KEY,
   diagnoza_id INT NOT NULL,
-  leczenie_id INT NOT NULL,
-  CONSTRAINT FK_leczenie_diagnoza
-    FOREIGN KEY (diagnoza_id) REFERENCES diagnoza(diagnoza_id),
-  CONSTRAINT FK_leczenie_leczenie
-    FOREIGN KEY (leczenie_id) REFERENCES leczenie(id)
+  leczenie_id INT NOT NULL
 );
 
 CREATE TABLE przypisany_oddzial (
   id INT AUTO_INCREMENT PRIMARY KEY,
   lekarz_id INT NOT NULL,
-  oddzial_id INT NOT NULL,
-  CONSTRAINT FK_oddzial_lekarz
-    FOREIGN KEY (lekarz_id) REFERENCES lekarz(id),
-  CONSTRAINT FK_oddzial_oddzial
-    FOREIGN KEY (oddzial_id) REFERENCES oddzial(id)
+  oddzial_id INT NOT NULL
 );
 
 INSERT INTO specjalizacja (nazwa)
@@ -165,7 +139,27 @@ VALUES
 ('Terapia tlenowa', 'Wspomaganie oddechu pacjenta czystym tlenem.'),
 ('Leczenie przeciwalergiczne', 'Odczulanie i stosowanie leków antyhistaminowych.'),
 ('Leczenie objawowe przeziębienia', 'Łagodzenie infekcji farmakologicznie i niefarmakologicznie.'),
-('Terapia manualna kręgosłupa', 'Zabiegi manualne łagodzące ból i poprawiające ruchomość kręgosłupa.');
+('Terapia manualna kręgosłupa', 'Zabiegi manualne łagodzące ból i poprawiające ruchomość kręgosłupa.'),
+('Rehabilitacja neurologiczna', 'Kompleksowa rehabilitacja pacjentów ze schorzeniami neurologicznymi.'),
+('Terapia immunologiczna', 'Wzmacnianie układu odpornościowego odpowiednimi preparatami.'),
+('Operacyjne leczenie przepukliny', 'Chirurgiczna naprawa różnych rodzajów przepuklin.'),
+('Leczenie hormonalne w endometriozie', 'Zastosowanie hormonów w łagodzeniu objawów endometriozy.'),
+('Neurochirurgiczna interwencja', 'Operacyjne leczenie chorób mózgu i rdzenia kręgowego.'),
+('Leczenie odwykowe', 'Terapia uzależnień od substancji psychoaktywnych.'),
+('Krioterapia dermatologiczna', 'Zastosowanie niskich temperatur w leczeniu zmian skórnych.'),
+('Transplantacja nerki', 'Przeszczep nerki u pacjentów z zaawansowaną niewydolnością nerek.'),
+('Operacja kręgosłupa', 'Chirurgiczna korekcja urazów i schorzeń kręgosłupa.'),
+('Balneoterapia', 'Leczenie uzdrowiskowe z wykorzystaniem wód leczniczych.'),
+('Terapia logopedyczna', 'Pomoc w zaburzeniach mowy i komunikacji.'),
+('Leczenie in vitro', 'Zapłodnienie pozaustrojowe w przypadku niepłodności.'),
+('Elektroterapia', 'Leczenie impulsami elektrycznymi wspomagające rehabilitację.'),
+('Kinezyterapia', 'Leczenie ruchem – zestaw ćwiczeń terapeutycznych.'),
+('Leczenie wrzodziejącego zapalenia jelita grubego', 'Farmakologiczne i niefarmakologiczne leczenie WZJG.'),
+('Psychoterapia poznawczo-behawioralna', 'Terapia ukierunkowana na zmianę schematów myślenia i zachowania.'),
+('Leczenie stomatologiczne zachowawcze', 'Plombowanie, usuwanie kamienia nazębnego, skaling.'),
+('Terapia integracji sensorycznej', 'Wsparcie w rozwoju zmysłów i koordynacji ruchowej.'),
+('Leczenie żywieniowe w onkologii', 'Specjalistyczna dieta dla pacjentów onkologicznych.'),
+('Sesje wsparcia psychologicznego', 'Grupowe lub indywidualne spotkania wspomagające zdrowie psychiczne.');
 
 INSERT INTO adres (ulica, nr_domu, nr_mieszkania, miasto, kod_pocztowy, wojewodztwo)
 VALUES
@@ -500,7 +494,23 @@ VALUES
 (23, 15),
 (24, 12),
 (25, 25),
-(25, 24);
+(25, 24),
+(3, 19),
+(4, 1),
+(7, 3),
+(9, 5),
+(10, 20),
+(12, 19),
+(13, 2),
+(14, 8),
+(16, 15),
+(17, 21),
+(18, 10),
+(20, 1),
+(20, 3),
+(21, 23),
+(23, 11),
+(24, 2);
 
 INSERT INTO przypisany_oddzial (lekarz_id, oddzial_id)
 VALUES
@@ -528,7 +538,42 @@ VALUES
 (22, 22),
 (23, 18),
 (24, 13),
-(25, 25);
+(25, 25),
+(1, 1),
+(1, 16),
+(2, 1),
+(3, 3),
+(4, 4),
+(4, 16),
+(5, 17),
+(6, 9),
+(7, 4),
+(8, 2),
+(8, 16),
+(9, 8),
+(10, 1),
+(10, 20),
+(11, 19),
+(12, 2),
+(12, 16),
+(13, 12),
+(14, 8),
+(14, 7),
+(15, 6),
+(16, 10),
+(17, 11),
+(18, 7),
+(19, 14),
+(19, 2),
+(20, 1),
+(21, 24),
+(21, 13),
+(22, 3),
+(23, 18),
+(23, 4),
+(24, 13),
+(24, 9),
+(25, 11);
 
 INSERT INTO wizyta (data, godzina, pacjent_id, lekarz_id, gabinet_id, diagnoza_id)
 VALUES
@@ -561,9 +606,49 @@ VALUES
 ('2025-02-07', '10:00:00', 50, 6, 9, 20),
 ('2025-02-08', '11:30:00', 24, 12, 3, 3),
 ('2025-02-09', '13:00:00', 26, 22, 22, 8),
-('2025-02-10', '14:30:00', 29, 18, 7, 10);
+('2025-02-10', '14:30:00', 29, 18, 7, 10),
+('2025-02-11', '09:00:00', 1, 1, 14, 2),
+('2025-02-12', '09:15:00', 2, 4, 5, 5),
+('2025-02-13', '09:30:00', 3, 7, 2, 1),
+('2025-02-14', '09:45:00', 4, 2, 1, 3),
+('2025-02-15', '10:00:00', 5, 8, 14, 28),
+('2025-02-16', '10:30:00', 6, 9, 9, 15),
+('2025-02-17', '11:00:00', 7, 10, 34, 27),
+('2025-02-18', '11:30:00', 8, 6, 33, 33),
+('2025-02-19', '12:00:00', 9, 11, 35, 11),
+('2025-02-20', '12:15:00', 10, 12, 3, 34),
+('2025-02-21', '12:30:00', 11, 16, 36, 39),
+('2025-02-22', '13:00:00', 12, 1, 1, 44),
+('2025-02-23', '13:15:00', 13, 3, 2, 54),
+('2025-02-24', '13:30:00', 14, 7, 14, 51),
+('2025-02-25', '14:00:00', 15, 18, 7, 36),
+('2025-02-26', '14:30:00', 16, 14, 8, 21),
+('2025-02-27', '15:00:00', 17, 9, 9, 70),
+('2025-02-28', '15:30:00', 18, 5, 4, 10),
+('2025-03-01', '09:00:00', 19, 2, 1, 29),
+('2025-03-02', '09:15:00', 20, 3, 2, 49),
+('2025-03-03', '09:30:00', 21, 8, 14, 60),
+('2025-03-04', '09:45:00', 22, 25, 25, 35),
+('2025-03-05', '10:00:00', 23, 13, 12, 31),
+('2025-03-06', '10:30:00', 24, 21, 20, 40),
+('2025-03-07', '11:00:00', 25, 24, 19, 45),
+('2025-03-08', '11:30:00', 26, 22, 22, 4),
+('2025-03-09', '12:00:00', 27, 19, 37, 7),
+('2025-03-10', '12:30:00', 28, 10, 34, 61),
+('2025-03-11', '13:00:00', 29, 15, 6, 55),
+('2025-03-12', '13:30:00', 30, 16, 36, 37),
+('2025-03-13', '14:00:00', 31, 4, 5, 23),
+('2025-03-14', '14:30:00', 32, 1, 14, 22),
+('2025-03-15', '15:00:00', 33, 14, 8, 17),
+('2025-03-16', '15:30:00', 34, 12, 3, 57),
+('2025-03-17', '09:00:00', 35, 9, 9, 59),
+('2025-03-18', '10:00:00', 36, 6, 33, 30),
+('2025-03-19', '11:00:00', 37, 7, 2, 24),
+('2025-03-20', '12:00:00', 38, 3, 1, 14),
+('2025-03-21', '13:00:00', 39, 2, 1, 62),
+('2025-03-22', '14:00:00', 40, 1, 14, 9);
 
-INSERT INTO przypisana_leczenie (diagnoza_id, leczenie_id)
+INSERT INTO przypisane_leczenie (diagnoza_id, leczenie_id)
 VALUES
 (1,  5),
 (2,  1),
@@ -634,4 +719,73 @@ VALUES
 (67, 8),
 (68, 3),
 (69, 16),
-(70, 17);
+(70, 17),
+(1,  1),
+(2,  2),
+(3,  3),
+(4,  4),
+(5,  5),
+(6,  6),
+(7,  7),
+(8,  8),
+(9,  9),
+(10, 10),
+(11, 11),
+(12, 12),
+(13, 13),
+(14, 14),
+(15, 15),
+(16, 16),
+(17, 17),
+(18, 18),
+(19, 19),
+(20, 20),
+(21, 21),
+(22, 22),
+(23, 23),
+(24, 24),
+(25, 25),
+(26, 26),
+(27, 27),
+(28, 28),
+(29, 29),
+(30, 30),
+(31, 31),
+(32, 32),
+(33, 33),
+(34, 34),
+(35, 35),
+(36, 36),
+(37, 37),
+(38, 38),
+(39, 39),
+(40, 40),
+(41, 20),
+(42, 19),
+(43, 18),
+(44, 17),
+(45, 16),
+(46, 15),
+(47, 14),
+(48, 13),
+(49, 11),
+(50, 10);
+
+INSERT INTO wizyta (data, godzina, pacjent_id, lekarz_id, gabinet_id, diagnoza_id)
+VALUES
+('2025-04-01', '09:00:00', 28, 23, 302, 16),
+('2025-04-01', '09:30:00', 29, 25, 401, 26),
+('2025-04-01', '10:00:00', 19, 16, 202, 33),
+('2025-04-01', '10:30:00', 5, 8, 101, 38),
+('2025-04-01', '11:00:00', 8, 7, 406, 46),
+('2025-04-01', '11:30:00', 9, 17, 203, 47),
+('2025-04-01', '12:00:00', 10, 2, 103, 48),
+('2025-04-01', '12:30:00', 12, 6, 201, 52),
+('2025-04-02', '09:00:00', 14, 18, 107, 55),
+('2025-04-02', '09:30:00', 15, 24, 205, 56),
+('2025-04-02', '10:00:00', 16, 4, 105, 63),
+('2025-04-02', '10:30:00', 17, 17, 203, 64),
+('2025-04-02', '11:00:00', 18, 21, 308, 66),
+('2025-04-02', '11:30:00', 2, 2, 404, 67),
+('2025-04-02', '12:00:00', 9, 1, 102, 68),
+('2025-04-02', '12:30:00', 5, 8, 101, 69);
