@@ -178,8 +178,6 @@ INSERT INTO adres (ulica, nr_domu, nr_mieszkania, miasto, kod_pocztowy, wojewodz
 ('Kwiatowa', '11',  4,  'Gdansk',    80004, 'Pomorskie'),
 ('Chmielna', '5',   1,  'Szczecin', 70006, 'Zachodniopom.');
 
-
--- -----------------------------------------
 INSERT INTO pacjent (pesel, imie, nazwisko, telefon, data_urodzenia, adres_id)
 VALUES
 ('12345678901','Jan','Kowalski',      123456789, '1980-01-01', 1),
