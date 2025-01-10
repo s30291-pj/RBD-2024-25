@@ -68,7 +68,7 @@ CREATE TABLE wizyta (
   godzina TIME NOT NULL,
   pacjent_id INT NOT NULL,
   lekarz_id INT NOT NULL,
-  gabinet_id INT,
+  gabinet_id INT NOT NULL,
   diagnoza_id INT
 );
 
@@ -89,6 +89,13 @@ CREATE TABLE przypisany_oddzial (
   lekarz_id INT NOT NULL,
   oddzial_id INT NOT NULL
 );
+
+# Do stworzenia zestawu danych wykorzystano dane pozyskane z:
+# https://pl.wikipedia.org/wiki/Specjalizacja_lekarska - specjalizacje
+# https://generatorliczb.pl/generator-imion-nazwisk - imiona i nazwiska
+# https://generatorliczb.pl/generator-pesel - pesel
+# https://www.bestrandoms.com/random-address-in-pl - adresy
+# https://remedium.md/icd10 - diagnozy, leczenia, terminy medyczne
 
 INSERT INTO 
 	specjalizacja (nazwa)
@@ -441,7 +448,7 @@ VALUES
 	('85011144332','Paweł','Szczepański','653333331','1985-01-11', 72),
 	('77061077881','Iwona','Kozioł','654444442','1977-06-10', 73),
 	('93081244339','Konrad','Markowski','655555553','1993-08-12', 74),
-	('99052933221','Joanna','Wrona','656666664','1999-05-29', 75);
+	('99052933221','Joanna','Wrona','656666664','1999-05-29', 76);
 
 INSERT INTO 
 	lekarz (pesel, imie, nazwisko, telefon, stopien, stanowisko, adres_id)
@@ -476,6 +483,7 @@ INSERT INTO
 	przypisana_specjalizacja (lekarz_id, specjalizacja_id)
 VALUES
 	(1, 1),
+    (4, 98),
 	(1, 19),
 	(2, 2),
 	(2, 25),
@@ -528,6 +536,8 @@ VALUES
 	(3,  2),
 	(12, 2),
 	(2,  3),
+    (6, 29),
+    (12, 29),
 	(4,  5),
 	(7,  5),
 	(5,  4),
@@ -665,6 +675,7 @@ VALUES
 	(1,  5),
 	(2,  1),
 	(3,  4),
+    (7, 89),
 	(4,  13),
 	(5,  6),
 	(6,  5),

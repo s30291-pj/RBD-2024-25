@@ -3,7 +3,7 @@
 USE Szpital;
  
 SELECT 
-	nazwa nazwa_specjalizacji, COUNT(lekarz_id) AS ilosc_lekarzy 
+	nazwa nazwa_specjalizacji, COUNT(lekarz_id) AS ilosc_lekarzy
 FROM 
 	specjalizacja AS sp 
 INNER JOIN 
