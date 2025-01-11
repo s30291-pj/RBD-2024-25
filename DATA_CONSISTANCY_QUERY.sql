@@ -31,16 +31,15 @@ WHERE wizyta.id IS NULL
 UNION
 
 # Wyswietlanie niespojnosci w tabeli przypisane_leczenie
-SELECT CONCAT("LECZENIE DLA DIAGNOZY O ID ", p_le.diagnoza_id, " NIE ISTNIEJE!") AS informacja 
+SELECT CONCAT("LECZENIE O ID ", p_le.leczenie_id, " DLA DIAGNOZY O ID ", p_le.diagnoza_id, " NIE ISTNIEJE!") AS informacja 
 FROM przypisane_leczenie p_le
-LEFT OUTER JOIN leczenie le 
-ON p_le.leczenie_id = le.id
+LEFT OUTER JOIN leczenie le ON p_le.leczenie_id = le.id
 WHERE le.id IS NULL
 
 UNION
 
 # Wyswietlanie niespojnosci w tabeli przypisane_specjalizacje
-SELECT CONCAT("SPECJALIZACJA DLA LEKARZA O ID ", p_sp.lekarz_id, " NIE ISTNIEJE!") AS informacja 
+SELECT CONCAT("SPECJALIZACJA O ID ", p_sp.specjalizacja_id, " DLA LEKARZA O ID ", p_sp.lekarz_id, " NIE ISTNIEJE!") AS informacja 
 FROM przypisana_specjalizacja p_sp
 LEFT OUTER JOIN specjalizacja sp ON p_sp.specjalizacja_id = sp.id
 WHERE sp.id IS NULL
@@ -48,7 +47,7 @@ WHERE sp.id IS NULL
 UNION
 
 # Wyswietlanie niespojnosci w tabeli przypisany_oddzial
-SELECT CONCAT("ODDZIAL DLA LEKARZA O ID ", p_od.lekarz_id, " NIE ISTNIEJE!") AS informacja 
+SELECT CONCAT("ODDZIAL O ID ", p_od.oddzial_id, " DLA LEKARZA O ID ", p_od.lekarz_id, " NIE ISTNIEJE!") AS informacja 
 FROM przypisany_oddzial p_od
 LEFT OUTER JOIN oddzial od ON p_od.oddzial_id = od.id
 WHERE od.id IS NULL;
